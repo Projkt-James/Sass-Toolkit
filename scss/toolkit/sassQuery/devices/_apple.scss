@@ -1,0 +1,45 @@
+//
+//  APPLE DEVICES
+//
+$device-props-apple: (
+    
+    ipad-pro: (
+        name: "iPad Pro", 
+        
+        pixel-ratio: 2,
+        height: 1366px,
+        width: 1024px,
+
+        landscape: (
+            height: 1024px,
+            width: 1366px,
+        ),
+        portrait: (
+            height: 1366px,
+            width: 1024px,
+        ),
+    ),
+
+    ipad: (
+        name: "iPad", 
+
+        height: 1024px,
+        width: 768px,
+
+        landscape: (
+            height: 768px,
+            width: 1024px,
+        ),
+        portrait: (
+            height: 1024px,
+            width: 768px,
+        ),
+    ),
+
+);
+
+//
+//  APPLE DEVICE ALIAS'
+//
+// Used to Map device alias' to predefined devices
+$device-alias-apple: ();

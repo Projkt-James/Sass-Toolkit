@@ -1,0 +1,12 @@
+{
+  "name": "sass-toolkit",
+  "version": "1.0.0",
+  "author": "James Hanford",
+  "scripts": {
+    "scss-watch": "node_modules/.bin/node-sass -x -o ./css ./scss/ --watch",
+    "build": "node_modules/.bin/node-sass -x -o ./css ./scss"
+  },
+  "devDependencies": {
+    "node-sass": "^4.9.3"
+  }
+}

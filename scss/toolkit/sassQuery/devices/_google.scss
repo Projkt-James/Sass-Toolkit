@@ -1,0 +1,14 @@
+//
+//  GOOGLE DEVICES
+//
+$device-props-google: (
+
+);
+
+//
+//  GENERIC DEVICE ALIAS'
+//
+// Used to Map device alias' to predefined devices
+$device-alias-google: (
+    nexus7: map-get($device-props-generic, 7in-tablet),
+);

@@ -1,0 +1,13 @@
+
+$animationVendors: ("-webkit-", "-moz-", "");
+@mixin animation($args...) {
+    @each $vendor in $animationVendors {
+    #{$vendor}animation: $args;
+    }
+}
+
+@mixin keyframes($name) {
+    @-webkit-keyframes #{$name} { @content; }
+    @-moz-keyframes #{$name} { @content; }
+    @keyframes #{$name} { @content; } 
+}

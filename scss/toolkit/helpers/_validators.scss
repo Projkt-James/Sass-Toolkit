@@ -1,0 +1,34 @@
+@import "listContains";
+
+$mediaTypes: (
+    all, 
+    print, 
+    screen, 
+    speech,
+);
+
+@function validateMediaType($typeInput) {
+    @if(listContains($mediaTypes, $typeInput)) {
+        @return true;
+    }
+    @warn "[ISSUE] '#{$typeInput}' couldn't be matched to a valid media type.";
+    @return false;
+}
+
+$mediaFeatures: (
+    height, 
+    max-height,
+    min-height,
+
+    width,
+    max-width,
+    min-width
+);
+
+@function validateMediaFeature($featureInput) {
+    @if(listContains($mediaFeatures, $featureInput)) {
+        @return true;
+    }
+    @warn "[ISSUE] '#{$featureInput}' couldn't be matched to a valid media feature.";
+    @return false;
+}

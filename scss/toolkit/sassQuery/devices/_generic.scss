@@ -1,0 +1,31 @@
+//
+//  GENERIC DEVICES
+//
+$device-props-generic: (
+
+    7in-tablet: (
+        name: "7in Tablet",
+        
+        //Default orientation you would expect during device use
+        height: 960px,
+        width: 600px,
+
+        landscape: (
+            height: 600px,
+            width: 960px,
+        ),
+        portrait: (
+            height: 960px,
+            width: 600px,
+        ),
+    ),
+
+
+
+);
+
+//
+//  GENERIC DEVICE ALIAS'
+//
+// Used to Map device alias' to predefined devices
+$device-alias-generic: ();

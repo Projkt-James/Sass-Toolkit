@@ -1,0 +1,120 @@
+@import "../helpers/validators";
+
+$device-props: ();
+
+//
+//  IMPORT VARIOUS DEVICE PROPERTIES AND MERGE TO SINGLE MAP
+//
+
+@import "devices/generic";
+$device-props: map-merge($device-props, $device-props-generic);
+$device-props: map-merge($device-props, $device-alias-generic);
+
+@import "devices/apple";
+$device-props: map-merge($device-props, $device-props-apple);
+$device-props: map-merge($device-props, $device-alias-apple);
+
+@import "devices/google";
+$device-props: map-merge($device-props, $device-props-google);
+$device-props: map-merge($device-props, $device-alias-google);
+
+
+@function resolveDeviceProperty($prop-list, $prop-name) {
+
+    @if map-has-key($map: $prop-list, $key: $prop-name) {
+        @return map-get($prop-list, $prop-name);
+    }
+
+    $deviceName: resolveDeviceProperty($prop-list, name);
+    @error "Device '#{$deviceName}' doesn't have property of '#{$prop-name}'";
+    @return null;
+}
+
+@function getDevice($device-name, $prop1:"", $prop2:"") {
+    @if map-has-key($map: $device-props, $key: $device-name) {
+        
+        $device: map-get($device-props, $device-name);
+        
+        //No property specified, return entire object
+        @if(str-length($prop1) < 1) {
+            @return $device;
+        }
+        
+        @if($prop1 == landscape or $prop1 == portrait) {
+            $nestedMap: resolveDeviceProperty($device, $prop1);
+            
+            //No property specificed for nested map, return entire object
+            @if(str-length($prop2) < 1) {
+                @return $nestedMap;
+            }
+
+            //Otherwise resolve device property in nested map
+            @return resolveDeviceProperty($nestedMap, $prop2);
+        }
+
+        //Otherwise resolve device property
+        @return resolveDeviceProperty($device, $property);
+    }
+
+    @warn "Error";
+    @return null;
+}
+
+
+@mixin breakTarget($device, $mediaFeaturesMap, $orientation:none, $mediaType:screen, $queryMedia:true, $queryOrientation:true) {
+    
+    $deviceObject: getDevice($device);
+    $props: (none: $deviceObject);
+
+    @if ($orientation == "landscape" or $orientation == "portrait") {
+        $props: ($orientation: resolveDeviceProperty($deviceObject, $orientation)); 
+    }
+    @else if ($orientation == "both") {
+        $props: (landscape: resolveDeviceProperty($deviceObject, landscape), portrait: resolveDeviceProperty($deviceObject, portrait));
+    }
+    @else if ($orientation != "none") {
+        $deviceName: resolveDeviceProperty($props, name);
+        @error "WOAH! You set a weird orientation '#{orientation}' for a '#{$deviceName}' media query.";
+    }
+    
+    //Loops props map to support 'both' orientations
+    @each $orientationProps in $props {
+   
+        //Variable to store the media query that is about to be built
+        $queryBuilder: "";
+
+        @if(validateMediaType($mediaType)) {
+            $queryBuilder: $queryBuilder "only #{$mediaType}";
+        }
+        @else {
+            $queryBuilder: $queryBuilder "only screen"; 
+        }
+
+        //Building the media query using the MediaFeaturesMap
+        @each $elem in $mediaFeaturesMap {
+            $featureName: nth($elem, 1);
+
+            @if(validateMediaFeature($featureName)){
+                $mappedPropName: nth($elem, 2);
+                $propsObject: nth($orientationProps, 2);
+                @warn #{"MAPPING OBJECT: "$orientationProps "PropName "$mappedPropName};
+                $featureValue: resolveDeviceProperty($propsObject, $mappedPropName);
+                $queryBuilder: $queryBuilder "and (#{$featureName}: #{$featureValue})";
+            }
+            @else {
+                @warn "Skipping media feature '#{$featureName}' because it isn't valid media query argument.";
+            }          
+        }
+
+        //Include orientation in query if queryOrientation is set true
+        @if (($orientation == "landscape" or $orientation == "portrait") and $queryOrientation) { 
+            $queryBuilder: $queryBuilder "and (orientation: #{$orientation})";
+        }
+        
+        @media #{$queryBuilder} {
+            @content;
+        }
+
+    }//END props list each loop
+
+}
