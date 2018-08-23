@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <!-- I cheated and used jQuery :( -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    
+    <title>Expanding Section Example</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="../css/expand-section.css" />
+
+</head>
+<body> 
+    
+    <section class="expandSect">
+        <header><span></span><h1>Class By Question</h1></header>
+
+        <div>
+            <p> 
+                ebfjfe<br>
+                fefeffefe<br>
+                effefefe<br>
+                fefeffefefefeef<br>
+                ffeef<br>
+            </p>
+        </div>
+    </section>
+
+</body>
+</html>
+
+<script> 
+
+$(document).ready( function() {
+
+    $('.expandSect').click( function() {
+        $(this).toggleClass('expanded')
+    });
+
+});
+</script>

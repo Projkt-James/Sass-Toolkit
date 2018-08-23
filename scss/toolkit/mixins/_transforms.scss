@@ -1,0 +1,9 @@
+
+$transformVendors: ("-webkit-", "-moz-", "-ms-", "");
+
+//TODO second value that allows to bind transition with the transform
+@mixin scaleY($value) {
+    @each $vendor in $transformVendors {
+        #{$vendor}transform: scaleY($value);
+    }
+}
