@@ -1,0 +1,43 @@
+body {
+  margin: 0; }
+  body div {
+    width: 100%;
+    height: 100vh;
+    background: #eee; }
+    body div::before {
+      content: "Base Styling";
+      position: absolute;
+      top: 45%;
+      width: 100%;
+      color: #4c5a61;
+      text-align: center;
+      font-family: 'Open Sans', sans-serif;
+      font-size: 50px; }
+    @media only screen and (max-height: 1024px) and (max-width: 1366px) and (orientation: landscape) {
+      body div::before {
+        content: "iPad Pro Landscape"; } }
+    @media only screen and (max-height: 1366px) and (max-width: 1024px) and (orientation: portrait) {
+      body div::before {
+        content: "iPad Pro Portrait"; } }
+    @media only screen and (max-height: 768px) and (max-width: 1024px) and (orientation: landscape) {
+      body div::before {
+        content: "iPad Landscape"; } }
+    @media only screen and (max-height: 1024px) and (max-width: 768px) and (orientation: portrait) {
+      body div::before {
+        content: "iPad Portrait"; } }
+  body #customSelectIcon {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    background: url("../scss/toolkit/svgs/arrow.svg") 92%/12% no-repeat;
+    background-color: #ccc;
+    padding: 10px;
+    padding-right: 60px;
+    border: none;
+    outline: none;
+    font-size: 15px; }
+    body #customSelectIcon::-ms-expand {
+      display: none; }

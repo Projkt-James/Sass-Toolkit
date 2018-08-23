@@ -1,0 +1,14 @@
+
+$appearanceVendors: ("-webkit-", "-moz-", "");
+@mixin appearance($value) {
+    @each $vendor in $appearanceVendors {
+        #{$vendor}appearance: $value;
+    }
+}
+
+$border-radiusVendors: ("-webkit-", "-moz-", "");
+@mixin border-radius($args...) {
+    @each $vendor in $border-radiusVendors {
+        #{$vendor}border-radius: $args;
+    }
+}

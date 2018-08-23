@@ -1,4 +1,5 @@
 @import "toolkit/sassQuery/sassQuery";
+@import "toolkit/mixins/all";
 
 body {
     margin: 0;
@@ -34,6 +35,24 @@ body {
 
         @include breakTarget(ipad, (max-height: height, max-width: width), portrait) {
             &::before{content: "iPad Portrait"}
+        }
+    }
+
+    #customSelectIcon {
+        @include appearance(none);
+        @include border-radius(3px);
+
+        background: url("../scss/toolkit/svgs/arrow.svg") 92% / 12% no-repeat;
+        background-color: #ccc;
+        padding: 10px;
+        padding-right: 60px;
+        border: none;
+        outline: none;
+
+        font-size: 15px;
+
+        &::-ms-expand {
+            display: none;
         }
     }
 }
