@@ -5,73 +5,104 @@ body {
     margin: 50px;
     font-family: 'Open Sans', sans-serif;
 
-    //
-    //  Expand Section 
-    //
-    section {
+}
+
+//
+//  Expand Section 
+//
+
+$headerHeight: 50px;
+$animationDuration: 0.6s;
+
+section {
+
+    overflow: hidden;
+    width: 100%;
+    position: relative;
+    max-height: $headerHeight;
+
+    transition: max-height $animationDuration ease;
+
+    header {
+        
+        cursor: pointer;
 
         width: 100%;
-        position: relative;
+        height: $headerHeight;
+        background-color: #999;
 
-        header {
-            
-            width: 100%;
-            height: 50px;
-            background-color: #ccc;
+        margin: 0;
+
+        display: flex;
+        align-items: center;           
+        
+        &:hover {
+            box-shadow: inset 0px 0px 100px rgba(255, 255, 255, 0.1);
+        }
+
+        h1 {
 
             margin: 0;
 
-            display: flex;
-            align-items: center;
+            color: white;
+            font-size: 14px;
+            font-weight: 400;
 
-            cursor: pointer;
-
-            h1 {
-                font-weight: 400;
-            }
-
-            //TODO Improve Chevron
-            span{ 
-                
-                position: relative;
-
-                width: 10px;
-                height: 10px;
-                margin: 0 20px;
-                margin-top: -5px;
-
-                display: inline-block;
-                border-right: 1px solid black;
-                border-bottom: 1px solid black;
-                
-                transform: rotate(45deg);
-                transition: transform 0.3s linear;
-            }
+            transition: color $animationDuration ease;
         }
 
-        div {
+        //TODO Improve Chevron
+        span{ 
+            
+            position: relative;
 
-            width: 100%;
-            background-color: #bdbdbd;
-            overflow: hidden;
-
-            @include scaleY(0);
-            transform-origin: top;
-            transition: transform 0.3s ease;
-
-            //Mock Contents
-            p { margin: 20px; }
-        }
-
-        //
-        //  When Expanded
-        //
-        &.expanded {
-
-            header > span { margin-top: 5px; transform: rotate(-135deg); }
-            div {
-                @include scaleY(1);
-            }
+            width: 10px;
+            height: 10px;
+            margin: 0 20px;
+            margin-top: -8px;
+            
+            display: inline-block;
+            border-right: 1px solid;
+            border-bottom: 1px solid;
+            border-color: white;
+            
+            transform: rotate(45deg);
+            transition: transform $animationDuration ease, border-color $animationDuration ease;
         }
     }
+
+    div {
+        
+        width: 100%;
+        overflow: hidden;
+
+        //@include scaleY(0);
+        transform-origin: top;
+        transition: transform $animationDuration ease;
+
+        //Mock Contents
+        p { margin: 20px; }
+    }
+
+    //
+    //  When Expanded
+    //
+    &.expanded {
+    
+        header {
+            
+            background-color: #ccc;
+
+            h1 { color: black; }
+            span { 
+                margin-top: 0px;
+                border-color: black;
+                transform: rotate(-45deg); 
+            }
+        }
+        div {
+            //@include scaleY(1);
+        }
+    }
+
 }

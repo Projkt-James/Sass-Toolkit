@@ -6,6 +6,7 @@
 
     <!-- I cheated and used jQuery :( -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="./expand-section.js"></script>
     
     <title>Expanding Section Example</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -14,30 +15,22 @@
 </head>
 <body> 
     
-    <section class="expandSect">
-        <header><span></span><h1>Class By Question</h1></header>
-
+    <section class="expandable">
+        <header title="Expandable Section Example"><span aria-hidden="true"></span><h1>Expanding Section 1</h1></header>
         <div>
-            <p> 
-                ebfjfe<br>
-                fefeffefe<br>
-                effefefe<br>
-                fefeffefefefeef<br>
-                ffeef<br>
-            </p>
+            <p>Dummy Content</p>
         </div>
     </section>
+
+    <section class="expandable">
+        <header title="Expandable Section Example"><span aria-hidden="true"></span><h1>Expanding Section 2</h1></header>
+        <div>
+            <p>Dummy Content</p>
+        </div>
+    </section>
+
+    <p>Content below will be pushed</p>
 
 </body>
 </html>
 
-<script> 
-
-$(document).ready( function() {
-
-    $('.expandSect').click( function() {
-        $(this).toggleClass('expanded')
-    });
-
-});
-</script>

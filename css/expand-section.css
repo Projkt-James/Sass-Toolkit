@@ -2,47 +2,53 @@
 body {
   margin: 50px;
   font-family: 'Open Sans', sans-serif; }
-  body section {
+
+section {
+  overflow: hidden;
+  width: 100%;
+  position: relative;
+  max-height: 50px;
+  transition: max-height 0.6s ease; }
+  section header {
+    cursor: pointer;
     width: 100%;
-    position: relative; }
-    body section header {
-      width: 100%;
-      height: 50px;
-      background-color: #ccc;
+    height: 50px;
+    background-color: #999;
+    margin: 0;
+    display: flex;
+    align-items: center; }
+    section header:hover {
+      box-shadow: inset 0px 0px 100px rgba(255, 255, 255, 0.1); }
+    section header h1 {
       margin: 0;
-      display: flex;
-      align-items: center;
-      cursor: pointer; }
-      body section header h1 {
-        font-weight: 400; }
-      body section header span {
-        position: relative;
-        width: 10px;
-        height: 10px;
-        margin: 0 20px;
-        margin-top: -5px;
-        display: inline-block;
-        border-right: 1px solid black;
-        border-bottom: 1px solid black;
-        transform: rotate(45deg);
-        transition: transform 0.3s linear; }
-    body section div {
-      width: 100%;
-      background-color: #bdbdbd;
-      overflow: hidden;
-      -webkit-transform: scaleY(0);
-      -moz-transform: scaleY(0);
-      -ms-transform: scaleY(0);
-      transform: scaleY(0);
-      transform-origin: top;
-      transition: transform 0.3s ease; }
-      body section div p {
-        margin: 20px; }
-    body section.expanded header > span {
-      margin-top: 5px;
-      transform: rotate(-135deg); }
-    body section.expanded div {
-      -webkit-transform: scaleY(1);
-      -moz-transform: scaleY(1);
-      -ms-transform: scaleY(1);
-      transform: scaleY(1); }
+      color: white;
+      font-size: 14px;
+      font-weight: 400;
+      transition: color 0.6s ease; }
+    section header span {
+      position: relative;
+      width: 10px;
+      height: 10px;
+      margin: 0 20px;
+      margin-top: -8px;
+      display: inline-block;
+      border-right: 1px solid;
+      border-bottom: 1px solid;
+      border-color: white;
+      transform: rotate(45deg);
+      transition: transform 0.6s ease, border-color 0.6s ease; }
+  section div {
+    width: 100%;
+    overflow: hidden;
+    transform-origin: top;
+    transition: transform 0.6s ease; }
+    section div p {
+      margin: 20px; }
+  section.expanded header {
+    background-color: #ccc; }
+    section.expanded header h1 {
+      color: black; }
+    section.expanded header span {
+      margin-top: 0px;
+      border-color: black;
+      transform: rotate(-45deg); }
