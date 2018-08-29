@@ -42,8 +42,13 @@ body {
         @include appearance(none);
         @include border-radius(3px);
 
-        background: url("../scss/toolkit/svgs/arrow.svg") 92% / 12% no-repeat;
+        background: url("../scss/toolkit/svgs/arrow.svg");
+        background-repeat: no-repeat;
+        background-position-x: 93%;
+        background-position-y: center;
+        background-size: 14px 14px;
         background-color: #ccc;
+
         padding: 10px;
         padding-right: 60px;
         border: none;

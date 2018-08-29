@@ -4,8 +4,6 @@
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-    <!-- I cheated and used jQuery :( -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="./expand-section.js"></script>
     
     <title>Expanding Section Example</title>
@@ -15,14 +13,14 @@
 </head>
 <body> 
     
-    <section class="expandable">
+    <section class="expandable" onclick="expandableSectionHandler(this)">
         <header title="Expandable Section Example"><span aria-hidden="true"></span><h1>Expanding Section 1</h1></header>
         <div>
             <p>Dummy Content</p>
         </div>
     </section>
 
-    <section class="expandable">
+    <section class="expandable" onclick="expandableSectionHandler(this)">
         <header title="Expandable Section Example"><span aria-hidden="true"></span><h1>Expanding Section 2</h1></header>
         <div>
             <p>Dummy Content</p>
