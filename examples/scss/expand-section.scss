@@ -1,10 +1,9 @@
-@import "toolkit/mixins/all";
+@import "../../toolkit/mixins/all";
 @import url('https://fonts.googleapis.com/css?family=Open+Sans');
 
 body {
     margin: 50px;
     font-family: 'Open Sans', sans-serif;
-
 }
 
 //
@@ -14,7 +13,7 @@ body {
 $headerHeight: 50px;
 $animationDuration: 0.6s;
 
-section {
+section.expandable {
 
     overflow: hidden;
     width: 100%;
