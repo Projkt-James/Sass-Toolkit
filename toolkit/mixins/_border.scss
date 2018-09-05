@@ -1,0 +1,13 @@
+$border-radiusVendors: ("-webkit-", "-moz-", "");
+@mixin border-radius($args...) {
+    @each $vendor in $border-radiusVendors {
+        #{$vendor}border-radius: $args;
+    }
+}
+
+$box-sizingVendors: ("-webkit-", "-moz-", "");
+@mixin box-sizing($arg) {
+    @each $vendor in $box-sizingVendors {
+        #{$vendor}box-sizing: $arg;
+    }
+}
