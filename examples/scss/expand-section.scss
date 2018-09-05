@@ -1,4 +1,7 @@
 @import "../../toolkit/mixins/all";
+@import "../../toolkit/ui-element/expandable-section";
+@import "../../toolkit/ui-element/shape/chevron";
+
 @import url('https://fonts.googleapis.com/css?family=Open+Sans');
 
 body {
@@ -6,102 +9,66 @@ body {
     font-family: 'Open Sans', sans-serif;
 }
 
-//
-//  Expand Section 
-//
+$chevron-props: (
+    
+    selector: "span",
+    
+    direction: right,
+    size: 5px,
+    right-weight: 1px,
+    bottom-weight: 1px,
 
-$headerHeight: 50px;
-$animationDuration: 0.6s;
+    color: white
+);
 
-section.expandable {
+$expanding-section-props: (
+    
+    parentSelector: 'section.expandable',
+    expandedSelector: '.expanded',
+    contentsSelector: 'div.contents',
 
-    overflow: hidden;
-    width: 100%;
-    position: relative;
-    max-height: $headerHeight;
+    width: 100%,
+    headerHeight: 50px,
 
-    transition: max-height $animationDuration ease;
+    transitionDuration: 0.6s,
+    transitionTimingFunc: ease,
+    transitionScaleContent: false,
 
-    header {
-        
-        cursor: pointer;
+    headerBackground: #999,
+    headerFontColor: white,
+    headerFont: "'Open Sans', sans-serif",
+    headerFontSize: 14px,
 
-        width: 100%;
-        height: $headerHeight;
-        background-color: #999;
+    chevron-props: $chevron-props
 
-        margin: 0;
+);
 
-        display: flex;
-        align-items: center;           
-        
-        &:hover {
-            box-shadow: inset 0px 0px 100px rgba(255, 255, 255, 0.1);
-        }
+@include expandingSection($expanding-section-props) {
 
-        h1 {
+    //Chevron icon using a toolkit shape element
+    @include chevron($chevron-props) {
+        margin: 20px;
+        transition: transform map-get($expanding-section-props, transitionDuration), border-color map-get($expanding-section-props, transitionDuration);
+        transition-timing-function: map-get($expanding-section-props, transitionTimingFunc);
+    }
 
-            margin: 0;
+    //Expanded Override Styling
+    &.expanded header {
 
-            color: white;
-            font-size: 14px;
-            font-weight: 400;
+        background: #ccc;
+        h1 { color: black; }
 
-            transition: color $animationDuration ease;
-        }
-
-        //TODO Improve Chevron
-        span{ 
-            
-            position: relative;
-
-            width: 10px;
-            height: 10px;
-            margin: 0 20px;
-            margin-top: -8px;
-            
-            display: inline-block;
-            border-right: 1px solid;
-            border-bottom: 1px solid;
-            border-color: white;
-            
-            transform: rotate(45deg);
-            transition: transform $animationDuration ease, border-color $animationDuration ease;
+        //Chevron icon
+        span {                  
+            @include chevron-direction(down);
+            margin-top: 12px;
+            border-color: black;
         }
     }
 
-    div {
-        
-        width: 100%;
-        overflow: hidden;
-
-        //@include scaleY(0);
-        transform-origin: top;
-        transition: transform $animationDuration ease;
-
+    .contents {
         //Mock Contents
         p { margin: 20px; }
-    }
-
-    //
-    //  When Expanded
-    //
-    &.expanded {
-    
-        header {
-            
-            background-color: #ccc;
-
-            h1 { color: black; }
-            span { 
-                margin-top: 0px;
-                border-color: black;
-                transform: rotate(-45deg); 
-            }
-        }
-        div {
-            //@include scaleY(1);
-        }
     }
 
 }

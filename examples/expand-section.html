@@ -8,23 +8,24 @@
     <title>Expanding Section Example</title>
 
     <!--- IMPORT CSS STYLING -->
-    <script src="./js/expand-section.js"></script>
-
-    <!--- IMPORT REQUIRED Javascript -->
     <link rel="stylesheet" type="text/css" href="./css/expand-section.css" />
+    
+    <!--- IMPORT REQUIRED Javascript -->
+    <script src="./js/expand-section.js"></script>
+    
 </head>
 <body> 
     
     <section class="expandable" onclick="expandableSectionHandler(this)">
         <header title="Expandable Section Example"><span aria-hidden="true"></span><h1>Expanding Section 1</h1></header>
-        <div>
+        <div class='contents'>
             <p>Dummy Content</p>
         </div>
     </section>
 
     <section class="expandable" onclick="expandableSectionHandler(this)">
         <header title="Expandable Section Example"><span aria-hidden="true"></span><h1>Expanding Section 2</h1></header>
-        <div>
+        <div class="contents">
             <p>Dummy Content</p>
         </div>
     </section>

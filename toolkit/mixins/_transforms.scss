@@ -7,3 +7,9 @@ $transformVendors: ("-webkit-", "-moz-", "-ms-", "");
         #{$vendor}transform: scaleY($value);
     }
 }
+
+@mixin rotate($value) {
+    @each $vendor in $transformVendors {
+        #{$vendor}transform: rotate($value);
+    }
+}

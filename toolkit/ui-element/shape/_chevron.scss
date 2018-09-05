@@ -1,0 +1,54 @@
+@import "../../mixins/all";
+
+
+@mixin chevron($props-map) {
+
+    $selector: map-get($props-map, selector);
+    $direction: map-get($props-map, direction);
+
+    $right-width: map-get($props-map, right-weight);
+    $bottom-width: map-get($props-map, bottom-weight);
+
+    #{$selector} {
+
+        display: inline-block;
+        padding: map-get($props-map, size);
+
+        border-style: solid;
+        border-color: map-get($props-map, color);
+        border-width: 0 $right-width $bottom-width 0;
+
+        @include chevron-direction($direction); 
+        
+        //Content at bottom allows base values to be overridden
+        @content;
+    }  
+}
+
+@mixin chevron-direction($direction) {
+    @if is-number($direction) {
+        @include rotate(#{$direction + "deg"});
+    } 
+    @else if is-angle($direction) {
+        @include rotate($direction);
+    }
+    @else if $direction == right {
+        @include rotate(-45deg);
+    }
+    @else if $direction == left {
+        @include rotate(135deg);
+    }
+    @else if $direction == up {
+        @include rotate(-135deg);
+    }@else if $direction == down {
+        @include rotate(45deg);
+    }
+}
+
+@function is-number($value) {
+    @return type-of($value) == 'number';
+}
+
+@function is-angle($value) {
+    @return is-number($value) and index('deg' 'rad' 'grad' 'turn', unit($value)) != null;
+}

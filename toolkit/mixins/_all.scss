@@ -1,4 +1,8 @@
+@import "animation";
+@import "border";
 @import "transforms";
+@import "userselect";
+
 
 $appearanceVendors: ("-webkit-", "-moz-", "");
 @mixin appearance($value) {
@@ -7,9 +11,4 @@ $appearanceVendors: ("-webkit-", "-moz-", "");
     }
 }
 
-$border-radiusVendors: ("-webkit-", "-moz-", "");
-@mixin border-radius($args...) {
-    @each $vendor in $border-radiusVendors {
-        #{$vendor}border-radius: $args;
-    }
-}
+

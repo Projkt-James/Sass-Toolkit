@@ -1,0 +1,76 @@
+/* TODO List
+    ~ Validation of generic property inputs
+    ~ Better options for selecting location of title and chevron in header
+*/
+
+@mixin expandingSection($props-map) {
+
+    $parentSelector: map-get($props-map, parentSelector);
+    $expandedSelector: map-get($props-map, expandedSelector);
+    $contentsSelector: map-get($props-map, contentsSelector);
+
+    // Section Not Expanded (Default)
+    #{$parentSelector} {
+
+        overflow: hidden;
+        position: relative;
+        width: map-get($props-map, width);      
+        max-height: map-get($props-map, headerHeight); //Use header height as default before updated by JS
+
+        transition: max-height map-get($props-map, transitionDuration);
+        transition-timing-function: map-get($props-map, transitionTimingFunc);
+
+        header {
+            
+            cursor: pointer;
+
+            width: 100%;
+            height: map-get($props-map, headerHeight);
+            background: map-get($props-map, headerBackground);
+
+            margin: 0;
+
+            display: flex;
+            align-items: center;
+
+            font-family: #{map-get($props-map, headerFont)}; 
+
+            h1 {
+                margin: 0;
+
+                color: map-get($props-map, headerFontColor);
+                font-size: map-get($props-map, headerFontSize);
+                font-weight: 400;
+
+                transition: color map-get($props-map, transitionDuration);
+                transition-timing-function: map-get($props-map, transitionTimingFunc);
+            }
+        }
+
+        #{$contentsSelector} {
+            
+            width: 100%;
+            overflow: hidden;
+
+            @if(map-get($props-map, transitionScaleContent)) {
+                @include scaleY(0);
+            }
+            transform-origin: top;
+            transition: transform map-get($props-map, transitionDuration) ease;
+        
+        }
+
+        // Section Expanded
+        &#{$expandedSelector} {
+            #{$contentsSelector} {
+                @if(map-get($props-map, transitionScaleContent)) {
+                    @include scaleY(1);
+                }
+            }
+        }
+
+        //Content at bottom allows base values to be overridden
+        @content;
+
+    }
+}
