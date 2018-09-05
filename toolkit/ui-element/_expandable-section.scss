@@ -27,7 +27,7 @@
             width: 100%;
             height: map-get($props-map, headerHeight);
             background: map-get($props-map, headerBackground);
-
+            @include box-sizing(border-box);
             margin: 0;
 
             display: flex;
