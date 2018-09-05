@@ -74,7 +74,7 @@ $device-props: map-merge($device-props, $device-alias-google);
     }
     @else if ($orientation != "none") {
         $deviceName: resolveDeviceProperty($props, name);
-        @error "WOAH! You set a weird orientation '#{orientation}' for a '#{$deviceName}' media query.";
+        @error "WOAH! You set an unknown orientation '#{orientation}' for a '#{$deviceName}' media query.";
     }
     
     //Loops props map to support 'both' orientations
