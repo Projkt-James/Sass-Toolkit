@@ -3,26 +3,23 @@
 
 @mixin chevron($props-map) {
 
-    $selector: map-get($props-map, selector);
     $direction: map-get($props-map, direction);
 
-    $right-width: map-get($props-map, right-weight);
-    $bottom-width: map-get($props-map, bottom-weight);
+    $right-width: map-get($props-map, y-weight);
+    $bottom-width: map-get($props-map, x-weight);
 
-    #{$selector} {
+    display: inline-block;
+    padding: map-get($props-map, size);
 
-        display: inline-block;
-        padding: map-get($props-map, size);
+    border-style: solid;
+    border-color: map-get($props-map, color);
+    border-width: 0 $right-width $bottom-width 0;
 
-        border-style: solid;
-        border-color: map-get($props-map, color);
-        border-width: 0 $right-width $bottom-width 0;
-
-        @include chevron-direction($direction); 
-        
-        //Content at bottom allows base values to be overridden
-        @content;
-    }  
+    @include chevron-direction($direction); 
+    
+    //Content at bottom allows base values to be overridden
+    @content;
+    
 }
 
 @mixin chevron-direction($direction) {

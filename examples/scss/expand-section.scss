@@ -11,12 +11,10 @@ body {
 
 $chevron-props: (
     
-    selector: "span",
-    
     direction: right,
     size: 10px,
-    right-weight: 1px,
-    bottom-weight: 1px,
+    x-weight: 1px,
+    y-weight: 1px,
 
     color: white
 );
@@ -43,24 +41,31 @@ $expanding-section-props: (
 
 @include expandingSection($expanding-section-props) {
 
+    //
+    //General Override Styling
+    //
     header {
 
         padding: 0 20px;
         @include border-radius(5px);
 
         //Chevron icon using a toolkit shape element
-        @include chevron($chevron-props) {
-            margin: 20px 10px;
-            transition: transform map-get($expanding-section-props, transitionDuration), border-color map-get($expanding-section-props, transitionDuration);
-            transition-timing-function: map-get($expanding-section-props, transitionTimingFunc);
+        span {
+            @include chevron($chevron-props) {
+                margin: 20px 10px;
+                transition: transform map-get($expanding-section-props, transitionDuration), border-color map-get($expanding-section-props, transitionDuration);
+                transition-timing-function: map-get($expanding-section-props, transitionTimingFunc);
+            }
         }
         
         h1 {
             padding: 0 10px;
         }
     }
-
+    
+    //
     //Expanded Override Styling
+    //
     &.expanded header {
 
         background: #ccc;
