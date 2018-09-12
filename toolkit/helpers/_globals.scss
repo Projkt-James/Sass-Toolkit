@@ -1,0 +1,19 @@
+
+@function getBrowserAlias($vendor) {
+    $webkit-alias: ('webkit', 'chrome', 'chromium', 'safari', 'opera');
+    $moz-alias: ('mozilla', 'firefox', 'moz');
+    $ms-alias: ('ie', 'internet explorer', 'edge', 'ms');
+
+    @if($vendor == webkit) {
+        @return $webkit-alias;
+    }
+
+    @if($vendor == moz) {
+        @return $moz-alias;
+    }
+
+    @if($vendor == ms) {
+        @return $ms-alias;
+    }
+
+}

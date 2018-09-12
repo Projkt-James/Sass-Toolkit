@@ -1,0 +1,5 @@
+@import "../../mixins/all";
+
+@mixin circle {
+    @include border-radius(50%);
+}
