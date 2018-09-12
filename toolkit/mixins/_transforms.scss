@@ -1,5 +1,5 @@
 
-$transformVendors: ("-webkit-", "-moz-", "-ms-", "");
+$transformVendors: ("-webkit-", "-o-", "-moz-", "-ms-", "");
 
 //TODO second value that allows to bind transition with the transform
 @mixin scaleY($value) {
@@ -11,5 +11,11 @@ $transformVendors: ("-webkit-", "-moz-", "-ms-", "");
 @mixin rotate($value) {
     @each $vendor in $transformVendors {
         #{$vendor}transform: rotate($value);
+    }
+}
+
+@mixin translateY($value) {
+    @each $vendor in $transformVendors {
+        #{$vendor}transform: translateY($value);
     }
 }

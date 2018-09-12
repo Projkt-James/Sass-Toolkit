@@ -1,0 +1,74 @@
+body {
+    margin: 50px;
+    font-family: 'Open Sans', sans-serif;
+}
+
+/* TODO List
+    ~ Break out into toolkit ui-element mixin
+    ~ Create option to use different ui-element shapes as active instead of only the tick
+*/
+
+$size: 50;
+
+div.checkbox {
+    position: relative;
+    
+    height: #{$size+2}px;
+    width: #{$size+2}px;
+
+    input { 
+        position: absolute;
+        width: #{$size+2}px;
+        height: #{$size+2}px;
+
+        margin: 0;
+        opacity: 0;
+        
+        cursor: pointer;
+        
+        //Checkbox hover
+        &:hover ~ span {
+            background: #eee;
+        }
+        //Checkbox checked
+        &:checked ~ span {
+            background: #373737;
+
+            &:after {
+                display: block;
+            }
+        }
+    }
+
+    span {
+        position: absolute;
+
+        height: #{$size}px;
+        width: #{$size}px;
+
+        background-color: #fbfbfb;
+        border: 1px solid #ececec;
+        border-radius: 0px;
+
+        z-index: -1;
+        cursor: pointer;
+
+        //Checkbox tick 
+        &:after {
+            content: '';
+            position: absolute;
+            display: none;
+
+            left: #{$size*0.34}px;
+            top: #{$size*.045}px;
+            width: #{$size*0.28}px;
+            height: #{$size*0.7}px;
+            border: solid white;
+            border-width: 0 2px 2px 0;
+
+            -webkit-transform: rotate(45deg);
+            -ms-transform: rotate(45deg);
+            transform: rotate(45deg);
+        }
+    }
+}
