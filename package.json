@@ -4,9 +4,14 @@
   "author": "James Hanford",
   "scripts": {
     "scss-watch": "node_modules/.bin/node-sass -x -o ./examples/css ./examples/scss/ --watch",
-    "build": "node_modules/.bin/node-sass -x -o ./examples/css ./examples/scss"
+    "build": "node_modules/.bin/node-sass -x -o ./examples/css ./examples/scss",
+    "scss-watch::origo": "node_modules/.bin/node-sass -x -o ./origo-tasks/css ./origo-tasks/scss/ --watch",
+    "build::origo": "node_modules/.bin/node-sass -x -o ./origo-tasks/css ./origo-tasks/scss"
   },
   "devDependencies": {
     "node-sass": "^4.9.3"
+  },
+  "dependencies": {
+    "rangeslider.js": "^2.3.2"
   }
 }

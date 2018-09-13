@@ -1,6 +1,6 @@
 @import "../../toolkit/mixins/all";
-@import "../../toolkit/helpers/globals";
-@import "../../toolkit/ui-element/shape/circle";
+
+@import url('https://fonts.googleapis.com/css?family=Open+Sans');
 
 body {
     margin: 50px;
@@ -8,146 +8,52 @@ body {
     background: #404040;
 }
 
-@mixin slider-track($targetBrowser: all) {
-
-    @if($targetBrowser == all) {
-
-        &::-webkit-slider-runnable-track { @content; } 
-        &::-moz-range-track { @content; }
-        &::-ms-track { @content; }
-
-    } @else {
-
-        // track if target browser was matched for error reporting
-        $matched: false;
-
-        @each $alias in getBrowserAlias(webkit) {
-            @if($targetBrowser == to-lower-case($alias)) {
-                &::-webkit-slider-runnable-track { @content; } 
-                $matched: true;
-            }
-        }
-
-        @each $alias in getBrowserAlias(moz) {
-            @if($targetBrowser == to-lower-case($alias)) {
-                &::-moz-range-track { @content; }
-                $matched: true;
-            }    
-        }
-        
-        //&::-ms-track { @content; }
-
-        @if(not($matched)) {
-            // error reporting
-            @warn "Unable to match a vendor to '#{$targetBrowser}' browser in 'slider-track', skipping.";
-        }
-    }
+output {
+    color: white;
+    font-size: 24px;
 }
 
-@mixin slider-thumb() {
-    &::-webkit-slider-thumb { @content; } 
-    &::-moz-range-thumb { @content; } 
-    &::-ms-thumb { @content; }
-}
+$width: 20%;
+$height: 15px;
 
-$width: 100%;
-$height: 40px;
 $thumb-scale: 2;
 
 $active-color: #3498db;
 $bg-color: #dedede;
 $thumb-color: white;
 
-#Toolkit-Slider {
-    
-    // remove default styles 
-    @include appearance(none);
+.rangeslider {
 
-    width: $width;
-    background: transparent;
-    @include box-sizing(border-box);
-
-    margin: 0;
-    padding: 0;
-    outline: none;
-    
-    color: black;
-    font-size: 0;  
-
-    @include slider-track() {
-
-        width: $width; 
-        height: $height; 
-        background: $bg-color;
+    &.is--horizontal {
         
-        @include box-sizing(border-box);
-        @include border-radius(20px);
-        border: none;
-    }
-
-    @include slider-track(webkit) {
-        overflow: hidden;
-        @include border-radius(20px);
-    }
-
-    // separate ms track because it requires some minor css hacks
-    &::-ms-track { 
-        
-        width: 100%;
-        height: ($height);
-        margin: ($height*.25) 0;
-
-        // remove bg colour from the track, we'll use ms-fill-lower and ms-fill-upper instead
-        background: transparent;
-        
-        // remove default tick marks
-        color: transparent;
-    }
-
-    &::-moz-range-progress {
-        background: $active-color;
+        position: relative;
+        width: $width;
         height: $height;
-
-        @include border-radius(20px 0 0 20px);
-    }
-
-    &::-ms-fill-lower,  { 
-        background: $active-color;
-        margin-left: 3px;
-
-        @include border-radius(20px);
-    }
-    &::-ms-fill-upper { 
         background: $bg-color;
-        margin-right: 3px;
 
-        @include border-radius(20px);
-    }
+        $spacing: ($thumb-scale - 1)*15;
+        margin: #{$spacing}px 0;
 
-    @include slider-thumb() {
-        
-        @include appearance(none);
-        @include box-sizing(border-box);
+        @include border-radius(10px);
 
-        height: ($height*1.5);
-        width: ($height*1.5);
-        background: $thumb-color;
-        border: none;
-
-        @include circle;
-    }
-
-    &::-webkit-slider-thumb { 
-        background: $thumb-color; 
-        margin-top: -10px;
-        //@include border-radius(0);
-        box-shadow: -100vw 0 0 99vw $active-color;
-    } 
-
+        .fill {
+            height: $height;
+            background: $active-color;
     
-    &::-ms-tooltip { display: none }
+            @include border-radius(10px);
+        }
 
+        .thumb {
+        
+            position: absolute;
+            width: $height;
+            height: $height;
+            background: white;
+    
+            margin-top: -($height);
+            @include border-radius(50%);
+            transform: scale($thumb-scale);
+        }
+
+    }
 }
-
-
-
