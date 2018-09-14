@@ -1,0 +1,48 @@
+@import "../../toolkit/mixins/all";
+
+@import url('https://fonts.googleapis.com/css?family=Open+Sans');
+
+body {
+    margin: 50px;
+    font-family: 'Open Sans', sans-serif;
+    background: #404040;
+}
+
+output {
+    color: white;
+    font-size: 24px;
+}
+
+$width: 20%;
+$height: 15px;
+
+$thumb-scale: 2;
+
+$active-color: #3498db;
+$bg-color: #dedede;
+$thumb-color: white;
+
+div.toolkitSlider {
+
+    position: relative;
+    width: $width;
+    height: $height;
+    background: $bg-color;
+
+    $spacing: ($thumb-scale - 1)*15;
+    margin: #{$spacing}px 0;
+
+    @include border-radius(10px);
+
+    .handle {
+        position: absolute;
+        width: $height;
+        height: $height;
+        background: white;
+
+        //margin-top: -($height);
+        @include border-radius(50%);
+        transform: scale($thumb-scale);
+    }
+
+}
