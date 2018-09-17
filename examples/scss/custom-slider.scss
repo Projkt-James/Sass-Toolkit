@@ -36,13 +36,25 @@ div.toolkitSlider {
 
     .handle {
         position: absolute;
-        width: $height;
-        height: $height;
+        width: $height * $thumb-scale;
+        height: $height * $thumb-scale;
         background: white;
 
-        //margin-top: -($height);
+        left: ($height * $thumb-scale);
         @include border-radius(50%);
-        transform: scale($thumb-scale);
+        transform: translateX(-100%) translateY(-25%);
+
+       
+    }
+
+    .fill {
+        
+        width: 0px;
+        height: $height;
+        background: $active-color;
+
+        display: block;
+        @include border-radius(10px);
     }
 
 }
