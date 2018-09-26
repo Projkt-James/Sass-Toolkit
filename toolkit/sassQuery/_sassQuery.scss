@@ -3,8 +3,13 @@
 $device-props: ();
 
 //
-//  IMPORT VARIOUS DEVICE PROPERTIES AND MERGE TO SINGLE MAP
+//  IMPORT VARIOUS DEVICE PROPERTIES AND MERGE INTO SINGLE MAP
 //
+
+@function resolveAlias($targetMap, $deviceName, $overrideMap: ()) {
+    $resolvedMap: map-get($targetMap, #{$deviceName});
+    @return map-merge($resolvedMap, $overrideMap);
+}
 
 @import "devices/generic";
 $device-props: map-merge($device-props, $device-props-generic);
@@ -20,28 +25,25 @@ $device-props: map-merge($device-props, $device-alias-google);
 
 
 @function resolveDeviceProperty($prop-list, $prop-name) {
-
     @if map-has-key($map: $prop-list, $key: $prop-name) {
         @return map-get($prop-list, $prop-name);
     }
-
-    $deviceName: resolveDeviceProperty($prop-list, name);
-    @error "Device '#{$deviceName}' doesn't have property of '#{$prop-name}'";
+    @error "Device with props'#{$prop-list}' doesn't have property of '#{$prop-name}'";
     @return null;
 }
 
 @function getDevice($device-name, $prop1:"", $prop2:"") {
     @if map-has-key($map: $device-props, $key: $device-name) {
         
-        $device: map-get($device-props, $device-name);
+        $deviceMap: map-get($device-props, $device-name);
         
         //No property specified, return entire object
         @if(str-length($prop1) < 1) {
-            @return $device;
+            @return $deviceMap;
         }
         
         @if($prop1 == landscape or $prop1 == portrait) {
-            $nestedMap: resolveDeviceProperty($device, $prop1);
+            $nestedMap: resolveDeviceProperty($deviceMap, $prop1);
             
             //No property specificed for nested map, return entire object
             @if(str-length($prop2) < 1) {
@@ -53,7 +55,7 @@ $device-props: map-merge($device-props, $device-alias-google);
         }
 
         //Otherwise resolve device property
-        @return resolveDeviceProperty($device, $property);
+        @return resolveDeviceProperty($deviceMap, $property);
     }
 
     @warn "Error";
@@ -97,7 +99,7 @@ $device-props: map-merge($device-props, $device-alias-google);
             @if(validateMediaFeature($featureName)){
                 $mappedPropName: nth($elem, 2);
                 $propsObject: nth($orientationProps, 2);
-                @warn #{"MAPPING OBJECT: "$orientationProps "PropName "$mappedPropName};
+                @warn #{"MAPPING OBJECT: "$propsObject "PropName "$mappedPropName};
                 $featureValue: resolveDeviceProperty($propsObject, $mappedPropName);
                 $queryBuilder: $queryBuilder "and (#{$featureName}: #{$featureValue})";
             }

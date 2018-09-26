@@ -13,10 +13,12 @@ $device-props-apple: (
         landscape: (
             height: 1024px,
             width: 1366px,
+            pixel-ratio: 2,
         ),
         portrait: (
             height: 1366px,
             width: 1024px,
+            pixel-ratio: 2,
         ),
     ),
 
@@ -36,10 +38,59 @@ $device-props-apple: (
         ),
     ),
 
+    iphone6-8-plus: (
+        name: "iPhone (6/6s/7/8) Plus",
+        
+        width: 414px,
+        height: 736px,
+        pixel-ratio: 3,
+
+        landscape: (
+            width: 736px,
+            height: 414px,
+            pixel-ratio: 3,
+        ),
+        portrait: ( 
+            width: 414px,
+            height: 736px,
+            pixel-ratio: 3,
+        ),
+    ),
+
+    iphone6-8 : (
+        name: "iPhone (6/7/8)",
+
+        width: 375px,
+        height: 667px,
+        pixel-ratio: 2,
+
+        landscape: (
+            width: 667px,
+            height: 375px,
+            pixel-ratio: 2,    
+        ),
+        portrait: (
+            width: 375px,
+            height: 667px,
+            pixel-ratio: 2,
+        ),
+    ),
+
 );
 
 //
 //  APPLE DEVICE ALIAS'
 //
 // Used to Map device alias' to predefined devices
-$device-alias-apple: ();
+$device-alias-apple: (
+
+    iphone6: resolveAlias($device-props-apple, iphone6-8, (name: "iPhone 6")),
+    iphone7: resolveAlias($device-props-apple, iphone6-8, (name: "iPhone 7")),
+    iphone8: resolveAlias($device-props-apple, iphone6-8, (name: "iPhone 8")),
+
+    iphone6-plus: resolveAlias($device-props-apple, iphone6-8-plus, (name: "iPhone 6 Plus")),
+    iphone6s-plus: resolveAlias($device-props-apple, iphone6-8-plus, (name: "iPhone 6s Plus")),
+    iphone7-plus: resolveAlias($device-props-apple, iphone6-8-plus, (name: "iPhone 7 Plus")),
+    iphone8-plus: resolveAlias($device-props-apple, iphone6-8-plus, (name: "iPhone 8 Plus")),
+);
+

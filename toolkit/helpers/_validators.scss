@@ -22,7 +22,10 @@ $mediaFeatures: (
 
     width,
     max-width,
-    min-width
+    min-width,
+
+    -webkit-device-pixel-ratio,
+    device-pixel-ratio
 );
 
 @function validateMediaFeature($featureInput) {
