@@ -9,7 +9,8 @@
     "build::origo": "node_modules/.bin/node-sass -x -o ./origo-tasks/css ./origo-tasks/scss"
   },
   "devDependencies": {
-    "node-sass": "^4.9.3"
+    "node-sass": "^4.9.3",
+    "typescript": "^3.1.1"
   },
   "dependencies": {
     "rangeslider.js": "^2.3.2"
