@@ -1,5 +1,5 @@
 @import "../../toolkit/mixins/all";
-@import "../../toolkit/ui-element/input/toggleSwitch.scss";
+@import "../../toolkit/ui-element/input/toolkitSwitch";
 
 @import url('https://fonts.googleapis.com/css?family=Open+Sans');
 
@@ -11,12 +11,12 @@ body {
 $properties: (
     width: 100px,
     height: 50px,
-    thumb-margin: 4px
+    thumb-margin: 1px
 );
-@include toggleSwitch($properties) {
+@include toolkitSwitch($properties) {
 
     //Switched checked override styling
-    input:checked ~ label{
+    input:checked ~ span{
         background: #3498db;
 
         //Thumb
@@ -25,7 +25,7 @@ $properties: (
     }
 
     //Standard Override styling
-    label {
+    span {
 
         //Thumb
         &:after {

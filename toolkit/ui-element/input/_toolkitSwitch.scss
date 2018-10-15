@@ -1,27 +1,22 @@
 @import "../../helpers/parseInt";
 
-@mixin toggleSwitch($props-map) {
+@mixin toolkitSwitch($props-map) {
 
     $thumb-margin: map-get($props-map, thumb-margin);
 
-    div.toggle-switch {
+    label.toolkitSwitch {
+        cursor: pointer;
         position: relative;
+        display: inline-block;
 
         height: map-get($props-map, height);
         width: map-get($props-map, width);
 
         input {
-            cursor: pointer;
-            z-index: 999;
             position: absolute;
-
-            width: 100%;
-            height: 100%;
-
-            margin: 0;
             opacity: 0;
 
-            &:checked ~ label {              
+            &:checked ~ span {              
                 background: #2ecc71;
                 &:after {
                     left: 50%;
@@ -30,9 +25,8 @@
         }
 
         //Switch Background
-        label {
+        span {
             position: absolute;
-
             width: 100%;
             height: 100%;
 
@@ -45,14 +39,15 @@
                 position: absolute;
                 left: 0;
 
-                width: calc(50% - #{((parseInt($thumb-margin) * 2) + unit($thumb-margin))});
-                height: calc(100% - #{((parseInt($thumb-margin) * 2) + unit($thumb-margin))});
+                width: calc(50% - #{$thumb-margin * 2});
+                height: calc(100% - #{$thumb-margin * 2});
                 margin: $thumb-margin;
 
                 background: white;
                 box-shadow:0 0 0 2px transparent,0 3px 3px rgba(0,0,0,.3);
                 border-radius: 50%;
 
+                //Animation
                 transition: left 300ms ease-in-out;
             }
         }
