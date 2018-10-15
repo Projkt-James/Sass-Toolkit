@@ -1,0 +1,36 @@
+@import "../../toolkit/mixins/all";
+@import "../../toolkit/ui-element/input/toggleSwitch.scss";
+
+@import url('https://fonts.googleapis.com/css?family=Open+Sans');
+
+body {
+    margin: 50px;
+    font-family: 'Open Sans', sans-serif;
+}
+
+$properties: (
+    width: 100px,
+    height: 50px,
+    thumb-margin: 4px
+);
+@include toggleSwitch($properties) {
+
+    //Switched checked override styling
+    input:checked ~ label{
+        background: #3498db;
+
+        //Thumb
+        &:after {
+        }  
+    }
+
+    //Standard Override styling
+    label {
+
+        //Thumb
+        &:after {
+
+        }
+    }
+}
+

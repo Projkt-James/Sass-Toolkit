@@ -2,7 +2,7 @@
 @import "border";
 @import "transforms";
 
-
+// Vendor Information: https://caniuse.com/#search=appearance 
 $appearanceVendors: ("-webkit-", "-moz-", "");
 @mixin appearance($value) {
     @each $vendor in $appearanceVendors {
