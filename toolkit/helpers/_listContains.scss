@@ -2,7 +2,7 @@
 //Helper that validates if a list contains a specific param
 @function listContains($list, $param) {
     @each $elem in $list {
-        @if($elem == $param) { @return true }
+        @if($elem == $param) { @return true; }
     }
     @return false;
 }

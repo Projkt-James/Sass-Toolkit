@@ -21,20 +21,38 @@ body {
             font-size: 50px;
         }
 
-        @include breakTarget(ipad-pro, (max-height: height, max-width: width), landscape) {
-            &::before{content: "iPad Pro Landscape"}
+        //Target iPad Pro screen dimensions
+        @include breakTarget(ipad-pro, (max-height: height, max-width: width, -webkit-device-pixel-ratio: pixel-ratio, pixel-ratio: pixel-ratio), landscape) {
+            &::before{content: "iPad Pro Landscape"; }
         }
 
         @include breakTarget(ipad-pro, (max-height: height, max-width: width), portrait) {
-            &::before{content: "iPad Pro Portrait"}
+            &::before{content: "iPad Pro Portrait"; }
         }
 
+        //Target iPad screen dimensions
         @include breakTarget(ipad, (max-height: height, max-width: width), landscape) {
-            &::before{content: "iPad Landscape"}
+            &::before{content: "iPad Landscape"; }
         }
 
         @include breakTarget(ipad, (max-height: height, max-width: width), portrait) {
-            &::before{content: "iPad Portrait"}
+            &::before{content: "iPad Portrait"; }
+        }
+
+        //Target iPhone Plus models 6-8 as they share similar screen dimensions
+        @include breakTarget(iphone8-plus, (max-height: height, max-width: width), landscape) {
+            &::before{content: "iPhone 6-8 Plus Landscape"; font-size: 30px; }
+        }
+        @include breakTarget(iphone8-plus, (max-height: height, max-width: width), portrait) {
+            &::before{content: "iPhone 6-8 Plus Portrait"; font-size: 30px; }
+        }
+
+        //Target iPhone models 6-8 as they share similar screen dimensions
+        @include breakTarget(iphone8, (max-height: height, max-width: width), landscape) {
+            &::before{content: "iPhone 6-8 Landscape"; }
+        }
+        @include breakTarget(iphone8, (max-height: height, max-width: width), portrait) {
+            &::before{content: "iPhone 6-8 Portrait"; }
         }
     }
 }

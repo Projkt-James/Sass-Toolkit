@@ -1,0 +1,75 @@
+@import "../../mixins/all";
+
+/* TODO List
+    ~ Create option to use different ui-element shapes as active instead of only the tick
+*/
+
+@mixin toolkitCheckbox($size) {
+
+    label.toolkitCheckbox {
+        cursor: pointer;
+        position: relative;
+        display: inline-block;
+        
+        height: #{$size};
+        width: #{$size};
+
+        input { 
+            position: absolute;
+            opacity: 0;
+            
+            //Checkbox hover
+            &:hover ~ span {
+                background: #eee;
+            }
+
+            //Checkbox checked
+            &:checked {
+                ~ span {
+                    background: #373737;
+                    border: none;
+                    &:after {
+                        display: block;
+                    }
+                }
+                &:hover ~ span{
+                    //Checkbox checked & hover
+                }
+            }
+        }
+
+        //Checkbox Background
+        span {
+            position: absolute;
+            height: 100%;
+            width: 100%;
+
+            background: #fbfbfb;
+            border: 2px solid #ececec;
+            @include border-radius(10px);
+
+            //Checkbox Tick 
+            &:after {
+                content: '';
+                display: none;
+                position: absolute;
+                left: 34%;
+                top: 8%;
+
+                width: 25%;
+                height: 60%;
+
+                box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.2);
+                border: solid white;
+                border-width: 0 8px 8px 0;
+
+                -webkit-transform: rotate(40deg);
+                -ms-transform: rotate(40deg);
+                transform: rotate(40deg);
+            }
+        }
+
+        //Content at bottom allows base values to be overridden
+        @content;
+    }
+}
