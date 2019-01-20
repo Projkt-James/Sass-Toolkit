@@ -2,7 +2,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let observerConfig = { characterData: true, attributes: true, childList: true, subtree: true};
 
-    let observers: NodeListOf<HTMLElement> = document.querySelectorAll('section.expandable');
+    let observers: Array<HTMLElement> = <HTMLElement[]>arrayFromNodeList(document.querySelectorAll('section.expandable'));
 
     observers.forEach((targetNode) => {
 
@@ -37,3 +37,14 @@ function sectionResizeHandler(section: HTMLElement): void {
 function expandableSectionHandler(e): void {
     e.classList.toggle('expanded');
 }
+
+//Deep copy array from NodeList object
+function arrayFromNodeList(nodeList: NodeList): Array<Node> {
+    let array: Array<Node> = [];
+    for (let key in nodeList) {
+        array.push(nodeList[key]);
+    }
+    return array;
+}
+
+

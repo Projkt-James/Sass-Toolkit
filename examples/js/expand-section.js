@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
     var observerConfig = { characterData: true, attributes: true, childList: true, subtree: true };
-    var observers = document.querySelectorAll('section.expandable');
+    var observers = arrayFromNodeList(document.querySelectorAll('section.expandable'));
     observers.forEach(function (targetNode) {
         var observer = new MutationObserver(function (mutations) {
             observer.disconnect(); //Disconnect observer to make dom mutations
@@ -26,4 +26,12 @@ function sectionResizeHandler(section) {
 //Note: resizing is handled by the observer as it picks up this class change
 function expandableSectionHandler(e) {
     e.classList.toggle('expanded');
+}
+//Deep copy array from NodeList object
+function arrayFromNodeList(nodeList) {
+    var array = [];
+    for (var key in nodeList) {
+        array.push(nodeList[key]);
+    }
+    return array;
 }

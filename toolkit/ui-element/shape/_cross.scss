@@ -1,0 +1,25 @@
+@import '../../mixins/all';
+
+@mixin  cross($line-height) {
+    
+    &::before, &::after {
+        content: '';
+        width: 100%;
+        height: $line-height;
+        background: #cccaca;
+
+        position: absolute;
+        left: 0;
+        right: 0;
+    }
+
+    &::before {
+        @include rotate(45deg);
+    }
+
+    &::after {
+        @include rotate(-45deg);
+    }
+
+    @content;
+}
