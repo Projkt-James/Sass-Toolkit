@@ -7,13 +7,13 @@ function updateOutput(targetOutput, value) {
 
 document.addEventListener('toolkitSlider-init', function(e) {
     var inputElement = e.detail.element;
-    var value = getInputValue(inputElement);
+    var value = e.detail.value;
     updateOutput(inputElement.dataset.slider, value);
 });
 
 document.addEventListener('toolkitSlider-active', function(e) {
     var inputElement = e.detail.element;
-    var value = getInputValue(inputElement);
+    var value = e.detail.value;
     updateOutput(inputElement.dataset.slider, value);
 });
 
@@ -24,20 +24,22 @@ document.addEventListener("DOMContentLoaded", function() {
     targetElements = [].slice.call(targetElements);   
 
     targetElements.forEach(function(input) {
-        sliders.push(new toolkitSlider(input, {
+        sliders.push(new ToolkitSlider(input, {
 
-            onInit: function(data) {
+            onInit: function(obj) {
                 var event = new CustomEvent('toolkitSlider-init', {
                     detail: {
-                        element: data.targetInput,
+                        element: obj.targetInput,
+                        value: obj.getValue()
                     }
                 });
                 document.dispatchEvent(event);
             },
-            onChange: function(data) {
+            onChange: function(obj) {
                 var event = new CustomEvent('toolkitSlider-active', {
                     detail: {
-                        element: data.targetInput,
+                        element: obj.targetInput,
+                        value: obj.getValue()
                     }
                 });
                 document.dispatchEvent(event);

@@ -1,160 +1,215 @@
-var InputProps;
-(function (InputProps) {
-    InputProps[InputProps["Value"] = 0] = "Value";
-    InputProps[InputProps["Min"] = 1] = "Min";
-    InputProps[InputProps["Max"] = 2] = "Max";
-    InputProps[InputProps["Step"] = 3] = "Step";
-})(InputProps || (InputProps = {}));
-var ToolkitSlider = /** @class */ (function () {
-    function ToolkitSlider(targetInput, params) {
-        var _this = this;
-        // Event lists
-        this.initEvent = ['mousedown', 'touchstart', 'pointerdown'];
-        this.moveEvent = ['mousemove', 'touchmove', 'pointermove'];
-        this.endEvent = ['mouseup', 'touchend', 'pointerup'];
-        this.observerConfig = { characterData: true, attributes: true, childList: true, subtree: true };
+enum InputProps {
+    Value,
+    Min,
+    Max,
+    Step
+}
+
+class ToolkitSlider {
+
+    // Object elements
+    targetInput: HTMLInputElement;
+    sliderParent: HTMLElement;
+    sliderHandle: HTMLElement;
+    sliderFill: HTMLElement;
+    params: { onInit?: (data: any) => void, onChange?: (data: any) => void };
+
+    // Event lists
+    initEvent: Array<String> = ['mousedown', 'touchstart', 'pointerdown'];
+    moveEvent: Array<String> = ['mousemove', 'touchmove', 'pointermove'];
+    endEvent: Array<String> = ['mouseup', 'touchend', 'pointerup'];
+
+    // Observer variables
+    observer: MutationObserver;
+    observerConfig: MutationObserverInit = {characterData: true, attributes: true, childList: true, subtree: true};
+
+    // Input properties
+    value: number;
+    min: number;
+    max: number;
+    step: number;
+
+    constructor(targetInput: HTMLInputElement, params: { onInit?: (data: any) => void, onChange?: (data: any) => void }) {
+
         this.targetInput = targetInput;
         this.hideElement(this.targetInput);
+
         this.sliderParent = document.createElement('div');
         this.sliderParent.classList.add('toolkitSlider');
+
         this.sliderHandle = document.createElement('span');
         this.sliderHandle.classList.add('handle');
+
         this.sliderFill = document.createElement('span');
         this.sliderFill.classList.add('fill');
+
         // Insert elements after the target input
         this.targetInput.after(this.sliderParent);
         this.sliderParent.appendChild(this.sliderHandle);
         this.sliderParent.appendChild(this.sliderFill);
+
         this.params = params;
         this.init();
+
         // Bind scope of this object to EventListener handlers
         this.initActionHandler = this.initActionHandler.bind(this);
         this.moveActionHandler = this.moveActionHandler.bind(this);
         this.endActionHandler = this.endActionHandler.bind(this);
+
         // Init slider handle starting action EventListeners
-        this.initEvent.forEach(function (eventName) {
-            _this.sliderParent.addEventListener(eventName, _this.initActionHandler);
+        this.initEvent.forEach((eventName: string) => {
+            this.sliderParent.addEventListener(eventName, this.initActionHandler);
         }, this);
+
         // MutationObserver to handle input attribute changes
         this.observerHandler = this.observerHandler.bind(this);
         this.observer = new MutationObserver(this.observerHandler);
         this.observer.observe(this.targetInput, this.observerConfig);
+
     }
+
     // Function to hide original input[type=range] DOM element
-    ToolkitSlider.prototype.hideElement = function (element) {
+    private hideElement(element: HTMLElement) {
         element.style.position = "absolute";
         element.style.width = '1px';
         element.style.height = '1px';
         element.style.overflow = 'hidden';
         element.style.opacity = '0';
-    };
-    ToolkitSlider.prototype.observerHandler = function (mutations) {
-        var _this = this;
+    }
+
+    private observerHandler(mutations: MutationRecord[]) {
+
         this.observer.disconnect(); // Disconnect observer to make dom mutations
-        mutations.forEach(function (mutation) {
+
+        mutations.forEach((mutation: MutationRecord) => {
+
             // Update value dom attribute
-            if (mutation.type == "attributes" && mutation.attributeName == "value") {
-                _this.setInputProp(_this.targetInput, InputProps.Value, _this.targetInput.getAttribute("value"));
-                _this.targetInput.setAttribute("value", _this.getInputProp(_this.targetInput, InputProps.Value));
-                _this.update();
-                _this.onChange();
+            if(mutation.type == "attributes" && mutation.attributeName == "value") {
+
+                this.setInputProp(this.targetInput, InputProps.Value, this.targetInput.getAttribute("value"));
+                this.targetInput.setAttribute("value", this.getInputProp(this.targetInput, InputProps.Value));
+
+                this.update();
+                this.onChange(); 
             }
         }, this);
+
         this.observer.observe(this.targetInput, this.observerConfig); // Reattach observer 
-    };
-    ToolkitSlider.prototype.initActionHandler = function (e) {
-        var _this = this;
+    }
+
+    private initActionHandler(e: MouseEvent): void {
         e.preventDefault();
+
         // Do nothing if not actioned with primary mouse button
-        if (e.button && e.button !== 0) {
-            return;
-        }
+        if(e.button && e.button !== 0) { return; }
+
         // Update input value based on mousemovement 
         this.value = this.valueFromMousePosition(e);
         this.syncValue();
+
         // Init move action EventListeners
-        this.moveEvent.forEach(function (eventName) {
-            document.addEventListener(eventName, _this.moveActionHandler, false);
+        this.moveEvent.forEach((eventName: string) => {
+            document.addEventListener(eventName, this.moveActionHandler, false);
         }, this);
+
         // Init End Action EventListeners
-        this.endEvent.forEach(function (eventName) {
-            document.addEventListener(eventName, _this.endActionHandler, false);
+        this.endEvent.forEach((eventName: string) => {
+            document.addEventListener(eventName, this.endActionHandler, false);
         }, this);
-    };
-    ToolkitSlider.prototype.moveActionHandler = function (e) {
+    }
+
+    private moveActionHandler(e: MouseEvent): void {
         e.preventDefault();
+
         // Update input value based on mousemovement 
         this.value = this.valueFromMousePosition(e);
         this.syncValue();
-    };
-    ToolkitSlider.prototype.endActionHandler = function (e) {
-        var _this = this;
+    }
+
+    private endActionHandler(e: MouseEvent): void {
         e.preventDefault();
+
         // Remove Move Action Event Listeners
-        this.moveEvent.forEach(function (eventName) {
-            document.removeEventListener(eventName, _this.moveActionHandler, false);
+        this.moveEvent.forEach((eventName: string) => {
+            document.removeEventListener(eventName, this.moveActionHandler, false);
         }, this);
+
         // Remove End Action Event Listeners
-        this.endEvent.forEach(function (eventName) {
-            document.removeEventListener(eventName, _this.endActionHandler, false);
+        this.endEvent.forEach((eventName: string) => {
+            document.removeEventListener(eventName, this.endActionHandler, false);
         }, this);
-    };
-    ToolkitSlider.prototype.syncValue = function () {
+    }
+
+    private syncValue(): void {
         // Keep dom input attributes persistent with object
         this.setInputProp(this.targetInput, InputProps.Value, this.value);
         this.targetInput.setAttribute("value", this.getInputProp(this.targetInput, InputProps.Value));
-    };
-    ToolkitSlider.prototype.getValue = function () {
+    }
+
+    public getValue(): number {
         return parseInt(this.getInputProp(this.targetInput, InputProps.Value));
-    };
-    ToolkitSlider.prototype.setValue = function (value) {
+    }
+
+    public setValue(value: number) {
         this.value = value;
         this.syncValue();
-    };
-    ToolkitSlider.prototype.update = function () {
+    }
+
+    private update(): void {
         this.value = parseInt(this.getInputProp(this.targetInput, InputProps.Value));
         this.min = parseInt(this.getInputProp(this.targetInput, InputProps.Min));
         this.max = parseInt(this.getInputProp(this.targetInput, InputProps.Max));
         this.step = parseInt(this.getInputProp(this.targetInput, InputProps.Step));
+
         var position = this.getPositionFromValue();
         var handleWidth = this.sliderHandle.getBoundingClientRect()['width'];
-        this.sliderHandle.style.left = position + 'px';
-        this.sliderFill.style.width = position - (handleWidth * 0.5) + 'px';
-    };
-    ToolkitSlider.prototype.init = function () {
+        this.sliderHandle.style.left =  position + 'px';
+        this.sliderFill.style.width = position - (handleWidth*0.5) + 'px';
+    }
+
+    private init(): void {
         this.update();
-        if (this.params.onInit && typeof this.params.onInit === 'function') {
+        if(this.params.onInit && typeof this.params.onInit === 'function') {
             var self = this;
             this.params.onInit(self);
         }
-    };
-    ToolkitSlider.prototype.onChange = function () {
-        if (this.params.onChange && typeof this.params.onChange === 'function') {
-            var self_1 = this;
-            this.params.onChange(self_1);
+    }
+
+    private onChange(): void {
+        if(this.params.onChange && typeof this.params.onChange === 'function') {
+            let self = this;
+            this.params.onChange(self);
         }
-    };
-    ToolkitSlider.prototype.valueFromMousePosition = function (e) {
-        var handleWidth = this.sliderHandle.getBoundingClientRect()['width'];
-        var trackWidth = this.sliderParent.getBoundingClientRect()['width'];
-        var sliderBoundingCoord = (this.sliderParent.getBoundingClientRect()['left']);
-        var mousePosition = ((e.clientX - (handleWidth * 0.5)) - sliderBoundingCoord);
-        var percentagePosition = (mousePosition / (trackWidth - handleWidth));
-        var valueRange = this.max - this.min;
+    }
+
+    private valueFromMousePosition(e: MouseEvent): number {
+        let handleWidth: number = this.sliderHandle.getBoundingClientRect()['width'];
+        let trackWidth: number = this.sliderParent.getBoundingClientRect()['width'];
+        let sliderBoundingCoord: number = (this.sliderParent.getBoundingClientRect()['left']);
+
+        let mousePosition: number = ((e.clientX - (handleWidth*0.5)) - sliderBoundingCoord);
+        let percentagePosition: number = (mousePosition/(trackWidth - handleWidth));
+        let valueRange: number = this.max-this.min;
+
         return (valueRange * percentagePosition) + this.min;
-    };
-    ToolkitSlider.prototype.getPositionFromValue = function () {
-        var handleWidth = this.sliderHandle.getBoundingClientRect()['width'];
-        var trackWidth = this.sliderParent.getBoundingClientRect()['width'];
-        var valueRange = this.max - this.min;
-        var pixelStep = (trackWidth - handleWidth) / valueRange;
+    }
+
+    private getPositionFromValue(): number {
+        let handleWidth: number = this.sliderHandle.getBoundingClientRect()['width'];
+        let trackWidth: number = this.sliderParent.getBoundingClientRect()['width'];
+
+        let valueRange: number = this.max-this.min;
+        let pixelStep = (trackWidth - handleWidth)/valueRange;
+
         return ((this.value - this.min) * pixelStep) + handleWidth;
-    };
+    }
+
     //
     // Helper Functions
     //
-    ToolkitSlider.prototype.setInputProp = function (inputElement, prop, value) {
-        switch (prop) {
+
+    private setInputProp(inputElement: HTMLInputElement, prop: InputProps, value: number|string) {
+        switch(prop) {
             default:
             case InputProps.Value:
                 return inputElement.value = value.toString();
@@ -165,9 +220,10 @@ var ToolkitSlider = /** @class */ (function () {
             case InputProps.Step:
                 return inputElement.step = value.toString();
         }
-    };
-    ToolkitSlider.prototype.getInputProp = function (inputElement, prop) {
-        switch (prop) {
+    }
+
+    private getInputProp(inputElement: HTMLInputElement, prop: InputProps) {
+        switch(prop) {
             default:
             case InputProps.Value:
                 return inputElement.value;
@@ -178,6 +234,7 @@ var ToolkitSlider = /** @class */ (function () {
             case InputProps.Step:
                 return inputElement.step;
         }
-    };
-    return ToolkitSlider;
-}());
+    }
+
+}
+
