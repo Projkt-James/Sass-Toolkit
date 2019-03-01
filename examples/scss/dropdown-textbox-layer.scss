@@ -1,0 +1,94 @@
+@import "../../toolkit/mixins/all";
+@import "../../toolkit/ui-element/expandable-section";
+@import "../../toolkit/ui-element/shape/chevron";
+
+@import url('https://fonts.googleapis.com/css?family=Open+Sans');
+
+body {
+    margin: 50px;
+    font-family: 'Open Sans', sans-serif;
+}
+.container {
+    display: block;
+    position: relative;
+    width: 40%;
+
+    .textInput {
+
+        display: block;
+    width: 100%;
+    height: 34px;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #555;
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #ccc;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+    -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
+    -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+    transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+
+        box-shadow: none;
+        border-color: #d2d6de;
+        border-radius: 3px;
+        appearance: none;
+        border-top-left-radius: 0;
+        border-bottom-right-radius: 0;
+
+        position: relative;
+        vertical-align: top;
+        background-color: transparent;
+    }
+
+
+    
+
+    .searchList {
+        /* HERE DOWN */
+        position: absolute;
+        width: calc(100% + 24px);
+        z-index: 999;
+
+        margin: 0;
+        padding: 0;
+
+        overflow: hidden;
+
+        max-height: 0; //Use header height as default before updated by JS
+
+        transition: max-height 0.3s;
+        transition-timing-function: ease;
+
+        
+
+        &.expanded {
+            max-height: 200px;
+            padding: 10px 0;
+            border: 1px solid #b3b3b3;
+            border-top: 0;
+        }
+
+        ul {
+            max-height:  200px;
+            padding: 0;
+            list-style: none;
+            margin: 0;
+            
+            overflow-y: auto;
+
+            li {
+                padding: 10px;
+                padding-left: 20px;
+
+                &:hover {
+                    cursor: pointer;
+                    color: white;
+                    background-color: rgb(2, 159, 160);
+                }
+            }
+        }
+    }
+}

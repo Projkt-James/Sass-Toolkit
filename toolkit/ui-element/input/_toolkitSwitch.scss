@@ -16,8 +16,12 @@
             position: absolute;
             opacity: 0;
 
-            &:checked ~ span {              
+            &:checked ~ span {
                 background: #2ecc71;
+
+                &:before {
+                    content: 'On';
+                }
                 &:after {
                     left: 50%;
                 }
@@ -33,6 +37,11 @@
             background: #eee;
             @include border-radius(30px);
 
+            &:before {
+                content: 'Off';
+                width: calc(50% / 2);
+                height: calc(100%);
+            }
             //Switch Thumb
             &:after {
                 content: '';

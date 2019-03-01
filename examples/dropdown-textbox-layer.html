@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>Drop Down Example</title>
+    
+    <!--- IMPORT CSS STYLING -->
+    <link rel="stylesheet" type="text/css" media="screen" href="./css/dropdown-textbox-layer.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+</head>
+<body> 
+
+    <div class="container">
+        <input class="textInput" name="textInput" type="text" autocomplete="off"></input>
+    
+        <div class="searchList">
+            <ul>
+                <li>Item 1</li>
+                <li>Item 2</li>
+                <li>Item 3</li>
+                <li>Item 4</li>
+                <li>Item 5</li>
+                <li>Item 6</li>
+            </ul>
+        </div>
+    </div>
+ 
+</body>
+
+<script>
+    $('.textInput').on('focus', function() {
+        $('.searchList').addClass('expanded');
+    });
+    $('.textInput').on('blur', function() {
+        $('.searchList').removeClass('expanded');
+    });
+</script>
+</html>
