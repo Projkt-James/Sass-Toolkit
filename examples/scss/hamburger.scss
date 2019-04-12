@@ -1,0 +1,24 @@
+@import "../../toolkit/ui-element/toolkitHamburger";
+
+body {
+    margin: 50px;
+    font-family: 'Open Sans', sans-serif;
+}
+
+div#Hamburger { 
+    $hamburger-props: (
+
+        color: black,
+        background: none,
+
+        width: 280px,
+        height: 260px,
+
+        bar-height: 30px,
+        bar-spacing: 6.5em,
+        bar-radius: 10px
+    );
+    @include toolkitHamburger($hamburger-props) {
+        // Can override base styling here
+    }
+}
