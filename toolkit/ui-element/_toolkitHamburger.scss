@@ -1,7 +1,6 @@
 
 @mixin  toolkitHamburger($props-map) {
 
-
     background: map-get($props-map, background-color);
     position: relative;
 
@@ -13,13 +12,13 @@
 
     cursor: pointer;
 
-    span {
+    span, span:before, span:after {
 
         background: map-get($props-map, color);
 
         position: absolute;
         // TODO: Possibly could write a positioning helper function to reduce # lines
-        top: 50%;
+        top: 0;
         bottom: 0;
         left: 0;
         right: 0;
@@ -27,28 +26,16 @@
         width: 100%;
         height: map-get($props-map, bar-height);
         border-radius: map-get($props-map, bar-radius);
+    }
+
+    span {
+        top: 50%;
+        transition: background-color 0.2s ease 0s;
 
         &:before, &:after {
-
-            background: map-get($props-map, color);
-
-            position: absolute;
-            // TODO: Possibly could write a positioning helper function to reduce # lines
-            top: 0;
-            bottom: 0;
-            left: 0;
-            right: 0;
-
-            width: 100%;
-            height: map-get($props-map, bar-height);
-            border-radius: map-get($props-map, bar-radius);
-            content: '';
-
             // TODO: Support custom animation timings in props map
-            transition-duration: 0.2s, 0.2s;
-            transition-delay: 0.2s, 0s;
-            transition-property: top, transform;
-            transition-timing-function: ease-out;
+            content: '';
+            transition: top 0.2s 0.2s ease-out, transform 0.2s 0s ease-out;
         }
 
         $bar-spacing: map-get($props-map, bar-spacing);
@@ -61,7 +48,8 @@
         }
     }
 
-    &[toolkitHamburgerActive] {
+    $data-attr: map-get($props-map, data-attr);
+    &[#{$data-attr}] {
         
         span {
             background: none !important;
@@ -70,7 +58,7 @@
                 top: 0px !important;
 
                 // Flip delay so rotate occurs first 
-                transition-delay: 0s, 0.2s;
+                transition: top 0.2s 0s ease-out, transform 0.2s 0.2s ease-out;
             }
 
             &:before {

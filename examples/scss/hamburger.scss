@@ -16,7 +16,8 @@ div#Hamburger {
 
         bar-height: 30px,
         bar-spacing: 6.5em,
-        bar-radius: 10px
+        bar-radius: 10px,
+        data-attr: "toolkitHamburgerActive"
     );
     @include toolkitHamburger($hamburger-props) {
         // Can override base styling here

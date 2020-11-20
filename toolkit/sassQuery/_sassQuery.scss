@@ -105,7 +105,7 @@ $device-props: map-merge($device-props, $device-alias-google);
             }
             @else {
                 @warn "Skipping media feature '#{$featureName}' because it isn't valid media query argument.";
-            }          
+            }
         }
 
         //Include orientation in query if queryOrientation is set true
